@@ -124,23 +124,22 @@ def delete_character(character_id):
 
 
 #ADD FAVORITE PLANET TO USER
-@app.route('/<user_id>/favorites/planets/<planet_id>', methods=['POST'])
-def add_favorite_planet(planet_id):
+@app.route('/favorites/planets/', methods=['POST'])
+def add_favorite_planet():
     body=request.get_json()
-    new_favorite_planet=Favorite(planet_id=planet_id, user_id=body['user_id'])
+    new_favorite_planet=Favorite(planet_id=body['planet_id'], user_id=body['user_id'])
     db.session.add(new_favorite_planet)
     db.session.commit()
     return jsonify(new_favorite_planet.serialize()), 200
 
 #ADD FAVORITE CHARACTER TO USER
-@app.route('/<user_id>/favorites/characters/<character_id>', methods=['POST'])
-def add_favorite_character(character_id):
+@app.route('/favorites/characters/', methods=['POST'])
+def add_favorite_character():
     body=request.get_json()
-    new_favorite_character=Favorite(character_id=character_id, user_id=body['user_id'])
+    new_favorite_character=Favorite(character_id=body['character_id'], user_id=body['user_id'])
     db.session.add(new_favorite_character)
     db.session.commit()
     return jsonify(new_favorite_character.serialize()), 200
-
 #GET USER FAVORITES
 @app.route('/<user_id>/favorites',methods=['GET'])
 def get_user_favorites(user_id):
